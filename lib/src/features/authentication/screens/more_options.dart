@@ -15,6 +15,7 @@ import 'package:production/src/features/supplier/screen/supplier_list_page.dart'
 
 import '../../Orders/screens/order_list_page.dart';
 import '../../materials/screens/material_list_screenn.dart';
+import '../../shift/screens/shift_list_page.dart';
 
 // impor
 
@@ -88,6 +89,11 @@ class MoreOptionsPage extends StatelessWidget {
               icon: Icons.wrap_text_sharp,
               label: "Warping",
               onTap: () => Get.to(() =>  WarpingListPage()),
+            ),
+            _OptionTile(
+              icon: Icons.transit_enterexit,
+              label: "Open Shift Production",
+              onTap: () => Get.to(() =>  ShiftListPage()),
             ),
             _OptionTile(
               icon: Icons.logout,

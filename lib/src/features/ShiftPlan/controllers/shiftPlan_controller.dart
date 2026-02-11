@@ -18,7 +18,7 @@ class CreateShiftPlanController extends GetxController {
   final machineOperatorMap = <String, String?>{}.obs;
 
   /// machineId -> jobId
-  final RxMap<String, String?> jobMap = <String, String>{}.obs;
+  final RxMap<String, String?> jobMap = <String, String?>{}.obs;
 
   final isLoading = false.obs;
   final isSaving = false.obs;

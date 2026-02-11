@@ -1,6 +1,8 @@
 import 'package:production/src/features/Job/models/preparatory_model.dart';
 import 'package:production/src/features/Job/models/wastage_view.dart';
 
+import '../../shiftProgram/models/shiftDetailModel.dart';
+import 'ShiftDetailModel.dart';
 import 'eqv.dart';
 import 'job_detail.dart';
 
@@ -36,6 +38,9 @@ class JobDetailViewMapper {
 
       // ♻️ Wastages
       wastages: _mapWastages(json['wastages'] ?? []),
+      shiftDetails: (json["shiftDetails"] as List? ?? [])
+          .map((e) => ShiftDetailModelView.fromJson(e))
+          .toList(),
     );
   }
 

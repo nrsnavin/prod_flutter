@@ -1,6 +1,8 @@
 import 'package:production/src/features/Job/models/preparatory_model.dart';
 import 'package:production/src/features/Job/models/wastage_view.dart';
 
+import '../../shiftProgram/models/shiftDetailModel.dart';
+import 'ShiftDetailModel.dart';
 import 'eqv.dart';
 
 class JobDetailView {
@@ -19,6 +21,8 @@ class JobDetailView {
   final List<ElasticQtyView> produced;
   final List<ElasticQtyView> packed;
   final List<WastageView> wastages;
+  final List<ShiftDetailModelView> shiftDetails;
+
 
 
   JobDetailView({
@@ -34,5 +38,6 @@ class JobDetailView {
     required this.produced,
     required this.packed,
     required this.wastages,
+    required this.shiftDetails
   });
 }

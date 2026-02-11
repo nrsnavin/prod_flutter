@@ -6,7 +6,9 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:production/src/features/Job/models/jobElastic.dart';
 
+import '../../shiftProgram/models/shiftDetailModel.dart';
 import '../controllers/job_detail_controller.dart';
+import '../models/ShiftDetailModel.dart';
 import '../models/eqv.dart';
 import '../models/job_detail.dart';
 import '../models/preparatory_model.dart';
@@ -38,6 +40,7 @@ class JobDetailPage extends StatelessWidget {
               _finishingSection(job),
               _checkingSection(job),
               _packingSection(job),
+              _shiftDetailsSection(job.shiftDetails),
             ],
           ),
         );
@@ -71,6 +74,83 @@ class JobDetailPage extends StatelessWidget {
           : const Icon(Icons.hourglass_empty),
     );
   }
+
+  Widget _shiftDetailsSection(List<ShiftDetailModelView> shifts) {
+    if (shifts.isEmpty) {
+      return const Card(
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Text("No shift records yet"),
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Shift Details",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 10),
+
+        ...shifts.map((shift) {
+          return Card(
+            elevation: 2,
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+
+                  // LEFT SIDE
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        _formatDate(shift.date as DateTime),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 4),
+                      Text("Shift: ${shift.shift}"),
+                      Text("Operator: ${shift.operatorName}"),
+                    ],
+                  ),
+
+                  // RIGHT SIDE
+                  Container(
+                    padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.green.shade100,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      children: [
+                        const Text(
+                          "Production",
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        Text(
+                          "${shift.production} m",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }).toList(),
+      ],
+    );
+  }
+
 
   Widget _weavingSection(JobDetailView job) {
     if (job.status != "weaving" && job.status != "preparatory")
