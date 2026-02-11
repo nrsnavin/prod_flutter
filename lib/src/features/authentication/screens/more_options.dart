@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:production/src/features/Covering/screens/covering_list.dart';
 import 'package:production/src/features/Orders/screens/add_order_page.dart';
+import 'package:production/src/features/ShiftPlan/screens/shift_plan_create.dart';
 import 'package:production/src/features/Warping/screens/warping_list.dart';
 import 'package:production/src/features/authentication/screens/home.dart';
 import 'package:production/src/features/authentication/screens/login.dart';
@@ -59,9 +60,9 @@ class MoreOptionsPage extends StatelessWidget {
               onTap: () => Get.to(() =>  OrderListPage()),
             ),
             _OptionTile(
-              icon: Icons.work,
-              label: "Jobs",
-              onTap: () => Get.to(() => const Home()),
+              icon: Icons.next_plan,
+              label: "Create Shift Plan",
+              onTap: () => Get.to(() => CreateShiftPlanPage()),
             ),
             _OptionTile(
               icon: Icons.check_box,
