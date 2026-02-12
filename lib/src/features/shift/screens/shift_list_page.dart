@@ -3,6 +3,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:intl/intl.dart';
 import 'package:production/src/features/shift/screens/shift_detail.dart';
 
 import '../controllers/shift_list_controller.dart';
@@ -40,6 +41,7 @@ class ShiftListPage extends StatelessWidget {
                   children: [
                     Text("Operator: ${shift.operatorName}"),
                     Text("Job: ${shift.jobNo}"),
+                    Text("Date: ${DateFormat.yMMMEd().format(shift.date)}"),
                     Text("Shift: ${shift.shift}"),
                   ],
                 ),

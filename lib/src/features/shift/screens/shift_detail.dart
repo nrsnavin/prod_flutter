@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:intl/intl.dart';
 
 import '../controllers/shift_detail.dart';
+import '../models/shift_detail_view_model.dart';
 
 class ShiftDetailPage extends StatelessWidget {
   final String shiftId;
@@ -14,51 +16,129 @@ class ShiftDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(ShiftDetailController(shiftId));
 
+    Widget _entryForm() {
+      return Column(
+        children: [
+          TextField(
+            controller: controller.productionController,
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(labelText: "Production (meters)"),
+          ),
+
+          const SizedBox(height: 12),
+
+          TextField(
+            controller: controller.timerController,
+            decoration: const InputDecoration(labelText: "Run Time (HH:MM:SS)"),
+          ),
+
+          const SizedBox(height: 12),
+
+          TextField(
+            controller: controller.feedbackController,
+            decoration: const InputDecoration(labelText: "Feedback"),
+          ),
+
+          const SizedBox(height: 20),
+
+          ElevatedButton(
+            onPressed: () {
+              controller.saveShift();
+            },
+            child: const Text("Submit Production"),
+          ),
+        ],
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(title: const Text("Shift Entry")),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            Obx(
+              () => Column(
+                children: [
+                  Text(
+                    "${controller.shift.value!.shift} Shift",
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
 
-            TextField(
-              controller: controller.productionController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Production (Meters)",
+                  const SizedBox(height: 8),
+
+                  Text(
+                    "Date: ${DateFormat.yMMMEd().format(DateTime.parse(controller.shift.value!.date))}",
+                  ),
+                  Text("Operator: ${controller.shift.value!.employeeName}"),
+
+                  const SizedBox(height: 20),
+                ],
               ),
             ),
-
-            const SizedBox(height: 15),
-
-            TextField(
-              controller: controller.timerController,
-              decoration: const InputDecoration(
-                labelText: "Timer (HH:mm:ss)",
-              ),
+            Obx(
+              () => controller.shift.value != null
+                  ? _machineInfo(controller.shift.value!)
+                  : CircularProgressIndicator(),
             ),
 
-            const SizedBox(height: 15),
+            Obx(
+              () => controller.shift.value!.status == "open"
+                  ? _entryForm()
+                  : _summaryCard(controller.shift.value!),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-            TextField(
-              controller: controller.feedbackController,
-              maxLines: 3,
-              decoration: const InputDecoration(
-                labelText: "Feedback",
-              ),
+  Widget _machineInfo(ShiftDetailViewModel shift) {
+    return Card(
+      color: Colors.blue.shade50,
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Machine: ${shift.machineName}",
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text("Job No: ${shift.jobNo}"),
+            const SizedBox(height: 10),
+            const Text(
+              "Running Elastics:",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            ...shift.runningElastics.map((e) => Text("• $e")),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _summaryCard(ShiftDetailViewModel s) {
+    return Card(
+      color: Colors.green.shade50,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Shift Completed",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(height: 12),
 
-            Obx(() => ElevatedButton(
-              onPressed: controller.isSaving.value
-                  ? null
-                  : controller.saveShift,
-              child: controller.isSaving.value
-                  ? const CircularProgressIndicator(
-                  color: Colors.white)
-                  : const Text("Submit Production"),
-            ))
+            Text("Production: ${s.production} meters"),
+            Text("Run Time: ${s.timer}"),
+            Text("Feedback: ${s.feedback}"),
           ],
         ),
       ),
