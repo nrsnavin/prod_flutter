@@ -41,7 +41,7 @@ class AddWastageController extends GetxController {
   }
 
   Future<void> fetchOperators(String jobId) async {
-    final res = await _dio.get("/job/job-operators/$jobId");
+    final res = await _dio.get("/job/job-operators?id=$jobId");
     operators.value = (res.data["operators"] as List)
         .map((e) => EmployeeModel.fromJson(e))
         .toList();
