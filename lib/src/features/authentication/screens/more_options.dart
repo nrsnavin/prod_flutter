@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:production/src/features/Covering/screens/covering_list.dart';
+import 'package:production/src/features/Job/screens/job_list_screen.dart';
 import 'package:production/src/features/Orders/screens/add_order_page.dart';
 import 'package:production/src/features/ShiftPlan/screens/shift_plan_create.dart';
 import 'package:production/src/features/Warping/screens/warping_list.dart';
@@ -12,6 +13,7 @@ import 'package:production/src/features/elastic/screens/addElastic.dart';
 import 'package:production/src/features/elastic/screens/elastic_list_page.dart';
 import 'package:production/src/features/materials/screens/add_materials_page.dart';
 import 'package:production/src/features/supplier/screen/supplier_list_page.dart';
+import 'package:production/src/features/wastage/screens/Add_Wastage.dart';
 
 import '../../Orders/screens/order_list_page.dart';
 import '../../materials/screens/material_list_screenn.dart';
@@ -25,9 +27,7 @@ class MoreOptionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("More"),
-      ),
+      appBar: AppBar(title: const Text("More")),
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: GridView.count(
@@ -38,7 +38,7 @@ class MoreOptionsPage extends StatelessWidget {
             _OptionTile(
               icon: Icons.people,
               label: "Customers",
-              onTap: () => Get.to(() =>  CustomerListPage()),
+              onTap: () => Get.to(() => CustomerListPage()),
             ),
             _OptionTile(
               icon: Icons.shopping_bag,
@@ -48,7 +48,7 @@ class MoreOptionsPage extends StatelessWidget {
             _OptionTile(
               icon: Icons.linear_scale,
               label: "Elastics",
-              onTap: () => Get.to(() =>  ElasticListPage()),
+              onTap: () => Get.to(() => ElasticListPage()),
             ),
             _OptionTile(
               icon: Icons.inventory_2,
@@ -58,7 +58,17 @@ class MoreOptionsPage extends StatelessWidget {
             _OptionTile(
               icon: Icons.note_add,
               label: "Orders",
-              onTap: () => Get.to(() =>  OrderListPage()),
+              onTap: () => Get.to(() => OrderListPage()),
+            ),
+            _OptionTile(
+              icon: Icons.military_tech,
+              label: "Jobs",
+              onTap: () => Get.to(() => JobListPage()),
+            ),
+            _OptionTile(
+              icon: Icons.transfer_within_a_station,
+              label: "Add Wastage",
+              onTap: () => Get.to(() => AddWastagePage()),
             ),
             _OptionTile(
               icon: Icons.next_plan,
@@ -83,17 +93,17 @@ class MoreOptionsPage extends StatelessWidget {
             _OptionTile(
               icon: Icons.surround_sound_rounded,
               label: "Covering",
-              onTap: () => Get.to(() =>  CoveringListPage()),
+              onTap: () => Get.to(() => CoveringListPage()),
             ),
             _OptionTile(
               icon: Icons.wrap_text_sharp,
               label: "Warping",
-              onTap: () => Get.to(() =>  WarpingListPage()),
+              onTap: () => Get.to(() => WarpingListPage()),
             ),
             _OptionTile(
               icon: Icons.transit_enterexit,
               label: "Open Shift Production",
-              onTap: () => Get.to(() =>  ShiftListPage()),
+              onTap: () => Get.to(() => ShiftListPage()),
             ),
             _OptionTile(
               icon: Icons.logout,
@@ -119,14 +129,10 @@ class MoreOptionsPage extends StatelessWidget {
         },
         child: const Text("Logout"),
       ),
-      cancel: TextButton(
-        onPressed: Get.back,
-        child: const Text("Cancel"),
-      ),
+      cancel: TextButton(onPressed: Get.back, child: const Text("Cancel")),
     );
   }
 }
-
 
 class _OptionTile extends StatelessWidget {
   final IconData icon;

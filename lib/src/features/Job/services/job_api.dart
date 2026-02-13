@@ -33,4 +33,20 @@ class JobApi {
     final res = await _dio.get("/job/detail", queryParameters: {"id": id});
     return res.data["job"];
   }
+
+  static Future<Response> getJobs({
+    required int page,
+    required String status,
+    required String search,
+  }) async {
+    return _dio.get(
+      "/job/jobs",
+      queryParameters: {
+        "page": page,
+        "limit": 10,
+        "status": status,
+        "search": search,
+      },
+    );
+  }
 }
