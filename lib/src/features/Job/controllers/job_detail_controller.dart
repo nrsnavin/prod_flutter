@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:production/src/features/Job/services/job_api.dart';
@@ -23,6 +26,33 @@ class JobDetailController extends GetxController {
   bool get isMachineAssigned => job.value?.machineName != null;
 
   // MachineAssignmentModel? get machineAssignment => job.machineAssignment;
+
+
+
+  Future<void> updateStatus(String nextStatus) async {
+    final confirm = await Get.dialog<bool>(
+      AlertDialog(
+        title: const Text("Confirm"),
+        content: Text("Move job to $nextStatus stage?"),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(result: false),
+            child: const Text("Cancel"),
+          ),
+          ElevatedButton(
+            onPressed: () => Get.back(result: true),
+            child: const Text("Confirm"),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true) return;
+
+    await JobApi.updateJobStatus(jobId, nextStatus);
+
+    await fetchJob();
+  }
 
 
   Future<void> fetchJob() async {

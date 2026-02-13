@@ -53,44 +53,43 @@ class ShiftDetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text("Shift Entry")),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Obx(
-              () => Column(
-                children: [
-                  Text(
-                    "${controller.shift.value!.shift} Shift",
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
+      body: Obx(
+        () => Padding(
+          padding: const EdgeInsets.all(16),
+          child: controller.shift.value != null
+              ? Column(
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          "${controller.shift.value!.shift} Shift",
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                        const SizedBox(height: 8),
+
+                        Text(
+                          "Date: ${DateFormat.yMMMEd().format(DateTime.parse(controller.shift.value!.date))}",
+                        ),
+                        Text(
+                          "Operator: ${controller.shift.value!.employeeName}",
+                        ),
+
+                        const SizedBox(height: 20),
+                      ],
                     ),
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  Text(
-                    "Date: ${DateFormat.yMMMEd().format(DateTime.parse(controller.shift.value!.date))}",
-                  ),
-                  Text("Operator: ${controller.shift.value!.employeeName}"),
-
-                  const SizedBox(height: 20),
-                ],
-              ),
-            ),
-            Obx(
-              () => controller.shift.value != null
-                  ? _machineInfo(controller.shift.value!)
-                  : CircularProgressIndicator(),
-            ),
-
-            Obx(
-              () => controller.shift.value!.status == "open"
-                  ? _entryForm()
-                  : _summaryCard(controller.shift.value!),
-            ),
-          ],
+                    controller.shift.value != null
+                        ? _machineInfo(controller.shift.value!)
+                        : CircularProgressIndicator(),
+                    controller.shift.value!.status == "open"
+                        ? _entryForm()
+                        : _summaryCard(controller.shift.value!),
+                  ],
+                )
+              : CircularProgressIndicator(),
         ),
       ),
     );

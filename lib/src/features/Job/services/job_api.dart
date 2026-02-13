@@ -12,19 +12,25 @@ class JobApi {
   );
 
   static Future<void> createOrder(Map<String, dynamic> payload) async {
-   final res= await _dio.post("/job/create", data: payload);
-   if(res.statusCode==201){
-     Get.snackbar("Success", "Job Created");
-     Get.back();
-   }
-
+    final res = await _dio.post("/job/create", data: payload);
+    if (res.statusCode == 201) {
+      Get.snackbar("Success", "Job Created");
+      Get.back();
+    }
   }
 
-  static Future<Map<String,dynamic>> fetchDetail(String id) async {
-    final res = await _dio.get(
-      "/job/detail",
-      queryParameters: {"id": id},
+  static Future<void> updateJobStatus(String id, String next) async {
+    final res = await _dio.post(
+      "/job/update-status",
+      data: {'jobId': id, 'nextStatus': next},
     );
+    if (res.statusCode == 201) {
+      Get.snackbar("Success", "Job Status Updated");
+    }
+  }
+
+  static Future<Map<String, dynamic>> fetchDetail(String id) async {
+    final res = await _dio.get("/job/detail", queryParameters: {"id": id});
     return res.data["job"];
   }
 }

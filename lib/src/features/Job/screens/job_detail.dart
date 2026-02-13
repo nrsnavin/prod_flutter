@@ -5,6 +5,7 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:production/src/features/Job/models/jobElastic.dart';
+import 'package:slide_to_act/slide_to_act.dart';
 
 import '../../shiftProgram/models/shiftDetailModel.dart';
 import '../controllers/job_detail_controller.dart';
@@ -35,6 +36,7 @@ class JobDetailPage extends StatelessWidget {
             children: [
               _header(job),
               _elasticSummary(job),
+              _statusAction(job),
               _preparatorySection(job),
               _weavingSection(job),
               _finishingSection(job),
@@ -148,6 +150,43 @@ class JobDetailPage extends StatelessWidget {
           );
         }).toList(),
       ],
+    );
+  }
+
+
+  Widget _statusAction(JobDetailView job) {
+    switch (job.status) {
+      case "weaving":
+        return _slideButton("Mark Weaving Complete", "finishing");
+
+      case "finishing":
+        return _slideButton("Mark Finishing Complete", "checking");
+
+      case "checking":
+        return _slideButton("Mark Checking Complete", "packing");
+
+      case "packing":
+        return _slideButton("Mark Order Complete", "completed");
+
+      default:
+        return const SizedBox();
+    }
+  }
+
+
+  Widget _slideButton(String title, String nextStatus) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      child: SlideAction(
+
+        text: title,
+        onSubmit: () async {
+          await c.updateStatus(nextStatus);
+        },
+        outerColor: Colors.blue,
+        innerColor: Colors.white,
+        elevation: 4,
+      ),
     );
   }
 

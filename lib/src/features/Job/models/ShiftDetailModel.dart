@@ -19,7 +19,7 @@ class ShiftDetailModelView {
       date: DateTime.parse(json["date"]),
       shift: json["shift"] ?? "",
       operatorName: json["employee"]?["name"] ?? "Not Assigned",
-      production: (json["production"] ?? 0).toDouble(),
+      production: (json["productionMeters"] ?? 0).toDouble(),
     );
   }
 }
