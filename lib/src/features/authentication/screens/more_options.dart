@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:production/src/features/Covering/screens/covering_list.dart';
 import 'package:production/src/features/Job/screens/job_list_screen.dart';
 import 'package:production/src/features/Orders/screens/add_order_page.dart';
+import 'package:production/src/features/PurchaseOrder/screnns/AddPurchaseOrder.dart';
 import 'package:production/src/features/ShiftPlan/screens/shift_plan_create.dart';
 import 'package:production/src/features/Warping/screens/warping_list.dart';
 import 'package:production/src/features/authentication/screens/home.dart';
@@ -12,6 +13,7 @@ import 'package:production/src/features/customer/screens/customerList.dart';
 import 'package:production/src/features/elastic/screens/addElastic.dart';
 import 'package:production/src/features/elastic/screens/elastic_list_page.dart';
 import 'package:production/src/features/materials/screens/add_materials_page.dart';
+import 'package:production/src/features/packing/screens/AddPacking.dart';
 import 'package:production/src/features/supplier/screen/supplier_list_page.dart';
 import 'package:production/src/features/wastage/screens/Add_Wastage.dart';
 
@@ -104,6 +106,16 @@ class MoreOptionsPage extends StatelessWidget {
               icon: Icons.transit_enterexit,
               label: "Open Shift Production",
               onTap: () => Get.to(() => ShiftListPage()),
+            ),
+            _OptionTile(
+              icon: Icons.backpack,
+              label: "Add Packing Details",
+              onTap: () => Get.to(() => AddPackingPage()),
+            ),
+            _OptionTile(
+              icon: Icons.backpack,
+              label: "Add Purchase Order",
+              onTap: () => Get.to(() => AddPurchaseOrderPage()),
             ),
             _OptionTile(
               icon: Icons.logout,
