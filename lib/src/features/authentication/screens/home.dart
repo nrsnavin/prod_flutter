@@ -8,7 +8,8 @@ import 'package:production/src/features/shiftProgram/screens/newShiftForm.dart';
 
 
 import '../../production/screens/productionView.dart';
-import '../../shiftProgram/screens/test.dart';
+
+import '../../shiftPlanView/screens/shiftPlanToday.dart';
 import '../controllers/login_controller.dart';
 
 class Home extends StatefulWidget {
@@ -48,7 +49,7 @@ class _BottomNavigationBarExampleState
     fontSize: 30,
     fontWeight: FontWeight.bold,
   );
-  static List<Widget> _widgetOptions = <Widget>[
+  static final List<Widget> _widgetOptions = <Widget>[
    EmpListScreen(),
     MachineListScreen(),
     ViewProduction(),
