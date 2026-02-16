@@ -19,6 +19,7 @@ import 'package:production/src/features/wastage/screens/Add_Wastage.dart';
 
 import '../../Orders/screens/order_list_page.dart';
 import '../../materials/screens/material_list_screenn.dart';
+import '../../packing/screens/PackingOverview.dart';
 import '../../shift/screens/shift_list_page.dart';
 
 // impor
@@ -110,7 +111,7 @@ class MoreOptionsPage extends StatelessWidget {
             _OptionTile(
               icon: Icons.backpack,
               label: "Add Packing Details",
-              onTap: () => Get.to(() => AddPackingPage()),
+              onTap: () => Get.to(() => PackagingOverviewPage()),
             ),
             _OptionTile(
               icon: Icons.backpack,

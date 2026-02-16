@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:production/src/features/packing/screens/AddPacking.dart';
+
+import '../controllers/PackingController.dart';
+import 'PackingListByJob.dart';
 
 class PackagingOverviewPage extends StatelessWidget {
   final controller = Get.put(PackagingController());
@@ -8,6 +14,10 @@ class PackagingOverviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+          child: Text("+"),
+          
+          onPressed: (){Get.to(AddPackingPage());}),
       appBar: AppBar(title: const Text("Packaging Overview")),
       body: Obx(() {
         return ListView.builder(

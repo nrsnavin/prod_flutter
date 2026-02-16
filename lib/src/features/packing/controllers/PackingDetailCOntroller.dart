@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
@@ -6,6 +7,17 @@ import '../screens/pdf.dart';
 
 class PackingDetailController
     extends GetxController {
+
+
+  final Dio _dio = Dio(
+    BaseOptions(
+      baseUrl: "http://10.0.2.2:2701/api/v2", // 🔁 CHANGE
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
+    ),
+  );
+  
+  
   var packing =
       PackingModel(
         id: "",
@@ -26,9 +38,11 @@ class PackingDetailController
 
   Future<void> fetchDetail(String id) async {
     final res =
-    await ApiService.getPackingDetail(id);
+    await _dio.get('/packing/'+id);
+    
+
     packing.value =
-        PackingModel.fromJson(res);
+        PackingModel.fromJson(res.data['packing']);
   }
 
   void openPdf() {
