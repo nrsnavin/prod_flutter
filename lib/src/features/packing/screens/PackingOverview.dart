@@ -33,7 +33,7 @@ class PackagingOverviewPage extends StatelessWidget {
                 trailing: const Icon(Icons.arrow_forward_ios),
                 onTap: () {
                   Get.to(() => PackingListByJobPage(),
-                      arguments: job["jobOrderNo"]);
+                      arguments: job["id"]);
                 },
               ),
             );

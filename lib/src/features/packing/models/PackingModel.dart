@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class PackingModel {
   final String id;
   final String jobOrderNo;
@@ -35,18 +37,18 @@ class PackingModel {
     return PackingModel(
       id: json["_id"],
       jobOrderNo: json["jobOrderNo"].toString(),
-      elasticName: json["elasticName"],
-      customerName: json["customerName"],
-      po: json["po"],
-      joints: json["joints"],
-      meters: (json["meters"] ?? 0).toDouble(),
-      stretch: (json["stretch"] ?? 0).toDouble(),
+      elasticName: json["elastic"]??"",
+      customerName: json["customerName"]??"",
+      po: json["po"]??"",
+      joints: json["joints"]??0,
+      meters: (json["meter"] ?? 0).toDouble(),
+      stretch: (int.parse(json["stretch"]) ?? 0).toDouble(),
       netWeight: (json["netWeight"] ?? 0).toDouble(),
       tareWeight: (json["tareWeight"] ?? 0).toDouble(),
       grossWeight: (json["grossWeight"] ?? 0).toDouble(),
-      checkedBy: json["checkedBy"],
-      packedBy: json["packedBy"],
-      serialNo: json["serialNo"],
+      checkedBy: json["checkedBy"]??"test",
+      packedBy: json["packedBy"]??"test",
+      serialNo: json["serialNo"]??"test",
     );
   }
 }

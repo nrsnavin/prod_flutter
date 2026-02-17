@@ -25,6 +25,12 @@ class PackagingController extends GetxController {
     final res = await _dio.get('/packing/grouped');
     
 
-    groupedJobs.value = res.data;
+    groupedJobs.value = res.data.map((e){
+      return {
+        "jobOrderNo":e['job']['jobOrderNo'],
+        "totalBoxes":e['totalBoxes'],
+        "id":e["job"]['_id']
+      };
+    }).toList();
   }
 }

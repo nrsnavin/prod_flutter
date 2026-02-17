@@ -17,11 +17,11 @@ class PackingListController extends GetxController {
 
   Future<void> fetchPackingByJob(String jobNo) async {
     final res =
-    await _dio.get("/packing/job/"+jobNo);
+    await _dio.get("/packing/job/$jobNo");
     
 
 
-    packingList.value = res.data['data']
+    packingList.value = res.data
         .map<PackingModel>(
             (e) => PackingModel.fromJson(e))
         .toList();
