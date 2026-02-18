@@ -44,7 +44,7 @@ class WarpingPlanPage extends StatelessWidget {
             keyboardType: TextInputType.number,
             onChanged: (v) {
               final n = int.tryParse(v) ?? 1;
-              c.updateBeamCount(n.clamp(1, 10));
+              c.updateBeamCount(n.clamp(1, 24300300));
             },
           ),
         ),

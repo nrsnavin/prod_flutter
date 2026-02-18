@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:intl/intl.dart';
+import 'package:production/src/features/authentication/screens/home.dart';
 
 import '../../shiftProgram/models/machine_model.dart';
 
@@ -63,7 +64,7 @@ class CreateShiftPlanController extends GetxController {
         }).toList(),
       });
 
-      Get.back();
+      Get.to(Home());
       Get.snackbar("Success", "Shift plan created");
     } catch (e) {
       if (e.toString().contains("409")) {

@@ -44,13 +44,14 @@ class WarpingDetailPage extends StatelessWidget {
 
               if (w.status == "open") _slideToStart(c),
 
-              ElevatedButton.icon(
-                onPressed: () {
-                  Get.to(() => WarpingPlanPage(),arguments: [w.jid,w.id]);
-                },
-                icon: const Icon(Icons.account_tree),
-                label: const Text("Create Warping Plan"),
-              ),
+              if (w.plan=="")
+                ElevatedButton.icon(
+                  onPressed: () {
+                    Get.to(() => WarpingPlanPage(),arguments: [w.jid,w.id]);
+                  },
+                  icon: const Icon(Icons.account_tree),
+                  label: const Text("Create Warping Plan"),
+                ),
 
               if (w.status == "in_progress") ...[
                 _runningIndicator(),
@@ -63,8 +64,8 @@ class WarpingDetailPage extends StatelessWidget {
               ...w.elastics.map(_elasticWarpCard),
               Obx(() {
                 if (!c.hasPlan.value) {
-                  return ElevatedButton(child: Text("data"),onPressed: (){
-                    Get.to(WarpingPlanPageView(warpingId:"69863957e8230cd864ae612f",),arguments: ["69863957e8230cd864ae612f"]);
+                  return ElevatedButton(child: Text("View Plan"),onPressed: (){
+                    Get.to(WarpingPlanPageView(warpingId:w.plan,),arguments: [w.plan]);
                   },);
                 }
                 

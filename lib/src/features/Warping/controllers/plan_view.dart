@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 
 import '../models/warping_plan_model.dart';
+import '../screens/pdf.dart';
 
 class WarpingPlanControllerView extends GetxController {
   /// Reactive loading flag
@@ -108,6 +109,7 @@ class WarpingPlanControllerView extends GetxController {
 
   /// 📄 Placeholder for PDF export
   void exportPdf() {
+    BeamPlanPdfService.generatePdf(jobOrderNo: plan.value.jobId, beams: plan.value.beams );
     Get.snackbar(
       "PDF",
       "Warping Plan PDF export triggered",

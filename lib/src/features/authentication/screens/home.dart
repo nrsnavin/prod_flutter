@@ -54,7 +54,6 @@ class _BottomNavigationBarExampleState
     MachineListScreen(),
     ViewProduction(),
     TodayShiftPage (),
-    NewShiftCreationForm(),
     MoreOptionsPage(),
 
   ];
@@ -96,11 +95,7 @@ class _BottomNavigationBarExampleState
             label: 'More',
             backgroundColor: Colors.grey,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.more_horiz),
-            label: 'More',
-            backgroundColor: Colors.grey,
-          ),
+
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],

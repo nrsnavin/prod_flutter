@@ -7,6 +7,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:dio/dio.dart';
 import 'package:production/src/features/Job/models/machineSelect.dart';
+import 'package:production/src/features/Job/screens/job_list_screen.dart';
 
 import '../models/jobElastic.dart';
 
@@ -105,7 +106,7 @@ class WeavingPlanController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
         );
 
-        Get.back(result: true); // 🔙 go back & refresh
+        Get.to(JobListPage()); // 🔙 go back & refresh
       }
     } catch (e) {
       errorMessage.value = "Failed to plan weaving";

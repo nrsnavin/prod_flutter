@@ -89,7 +89,7 @@ class WarpingPlanModel {
       jobId: json['job'] is Map
           ? json['job']['_id']
           : json['job'],
-      noOfBeams: json['beamCount'],
+      noOfBeams: json['beams'].length,
       remarks: "",
       createdAt: DateTime.parse(json['createdAt']),
       beams: (json['beams'] as List)

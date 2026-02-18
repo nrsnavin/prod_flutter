@@ -1,15 +1,17 @@
 import 'dart:io';
+import 'package:open_file/open_file.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
+import 'package:production/src/features/Warping/models/warping_plan_model.dart';
 
 import '../models/beam.dart';
 
 
 class BeamPlanPdfService {
-  static Future<File> generatePdf({
+  static  generatePdf({
     required String jobOrderNo,
-    required List<BeamPlan> beams,
+    required List<WarpingBeam> beams,
   }) async {
     final pdf = pw.Document();
 
@@ -36,7 +38,8 @@ class BeamPlanPdfService {
     final dir = await getApplicationDocumentsDirectory();
     final file = File('${dir.path}/BeamPlan_$jobOrderNo.pdf');
     await file.writeAsBytes(await pdf.save());
-    return file;
+    OpenFile.open(file.path);
+
   }
 
   // ---------------- WIDGETS ----------------
@@ -78,7 +81,7 @@ class BeamPlanPdfService {
     );
   }
 
-  static pw.Widget _beamBlock(BeamPlan beam) {
+  static pw.Widget _beamBlock(WarpingBeam beam) {
     return pw.Column(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [

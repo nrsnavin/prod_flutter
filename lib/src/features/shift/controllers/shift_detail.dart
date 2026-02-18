@@ -5,6 +5,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:production/src/features/shift/models/shift_detail_view_model.dart';
+import 'package:production/src/features/shift/screens/shift_list_page.dart';
 
 class ShiftDetailController extends GetxController {
   final String shiftId;
@@ -66,7 +67,7 @@ class ShiftDetailController extends GetxController {
       );
 
       Get.snackbar("Success", "Shift Updated");
-      Get.back();
+      Get.to(ShiftListPage());
     } catch (e) {
       Get.snackbar("Error", "Failed to update shift");
     } finally {

@@ -7,6 +7,7 @@ class WarpingDetailModel {
   final int jobOrderNo;
   final String jid;
   final List<ElasticWarpDetailModel> elastics;
+  final String plan;
 
   WarpingDetailModel({
     required this.id,
@@ -14,7 +15,8 @@ class WarpingDetailModel {
     required this.date,
     required this.jobOrderNo,
     required this.elastics,
-    required this.jid
+    required this.jid,
+    required this.plan
   });
 
   factory WarpingDetailModel.fromJson(Map<String, dynamic> json) {
@@ -24,9 +26,11 @@ class WarpingDetailModel {
       date: DateTime.parse(json['date']),
       jobOrderNo: json['job']['jobOrderNo'],
       jid: json['job']['_id'],
+
       elastics: (json['elasticOrdered'] as List)
           .map((e) => ElasticWarpDetailModel.fromJson(e))
           .toList(),
+      plan: json['warpingPlan']??""
     );
   }
 }
