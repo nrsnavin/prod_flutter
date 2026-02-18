@@ -17,11 +17,11 @@ class ShiftSummaryModel {
 
   factory ShiftSummaryModel.fromJson(Map<String, dynamic> json) {
     return ShiftSummaryModel(
-      id: json["_id"]??"test",
+      id: json["id"]??"test",
       shift: json["shift"],
-      runningMachines: json["machinesRunning"] ?? 0,
+      runningMachines: json["machineCount"] ?? 0,
       operators: json["operatorCount"] ?? 0,
-      production: (json["production"] ?? 0).toDouble(),
+      production: (json["totalProduction"] ?? 0).toDouble(),
       status: json["status"] ?? "open",
     );
   }

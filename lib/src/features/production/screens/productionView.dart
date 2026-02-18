@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:production/src/common_widgets/appBar.dart';
+import 'package:production/src/features/production/controllers/productionController.dart';
 import 'package:production/src/features/production/controllers/productionViewController.dart';
 import 'package:production/src/features/production/models/productionBrief.dart';
 import 'package:production/src/features/production/screens/productionOnDate.dart';
+import 'package:production/src/features/production/screens/shiftViewPage.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class ViewProduction extends StatefulWidget {
@@ -20,17 +22,13 @@ class ViewProduction extends StatefulWidget {
 }
 
 class _ViewProduction extends State<ViewProduction> {
-  final productionViewController = Get.put(ProductionViewController());
+  final controller = Get.put(ProductionController());
   String _range = '';
 
-  late List<ProductionBrief> postsFuture =
-      productionViewController.productionBriefs;
-
   final DateRangePickerController _pickerController =
-  DateRangePickerController();
+      DateRangePickerController();
 
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-
     if (args.value is PickerDateRange) {
       final PickerDateRange range = args.value;
 
@@ -42,17 +40,14 @@ class _ViewProduction extends State<ViewProduction> {
 
         if (difference > 30) {
           // 🚫 Invalid range – reset end date
-          _pickerController.selectedRange =
-              PickerDateRange(start, start.add(const Duration(days: 30)));
-
-
-          Get.snackbar(
-            'Invalid Range',
-            'Date range cannot exceed 30 days',
+          _pickerController.selectedRange = PickerDateRange(
+            start,
+            start.add(const Duration(days: 30)),
           );
-        }
-        else{
-          productionViewController.getProductionDetailsInRange(
+
+          Get.snackbar('Invalid Range', 'Date range cannot exceed 30 days');
+        } else {
+          controller.fetchDateRange(
             DateFormat('yyyy-MM-dd').format(args.value.startDate),
             DateFormat(
               'yyyy-MM-dd',
@@ -77,10 +72,13 @@ class _ViewProduction extends State<ViewProduction> {
         body: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           scrollDirection: Axis.vertical,
-            dragStartBehavior: DragStartBehavior.start,
-          controller: ScrollController(debugLabel: "nvain",keepScrollOffset: true,),
+          dragStartBehavior: DragStartBehavior.start,
+          controller: ScrollController(
+            debugLabel: "nvain",
+            keepScrollOffset: true,
+          ),
 
-clipBehavior: Clip.hardEdge,
+          clipBehavior: Clip.hardEdge,
 
           child: Padding(
             padding: const EdgeInsets.all(12.0),
@@ -114,9 +112,37 @@ clipBehavior: Clip.hardEdge,
                 ),
                 SizedBox(height: 10),
                 Obx(
-                  () => Column(
-                    // FutureBuilder
-                    children: [...postsFuture.map(_shiftCard).toList()],
+                  () => SizedBox(
+                    height: MediaQuery.sizeOf(context).height,
+                    child: Center(
+                      // FutureBuilder
+                      child: controller.days.value.isNotEmpty
+                          ? ListView.builder(
+                              itemCount: controller.days.length,
+                              itemBuilder: (_, index) {
+                                final day = controller.days[index];
+
+                                return Card(
+                                  child: ListTile(
+                                    title: Text(day.date),
+                                    subtitle: Text(
+                                      "Total: ${day.totalProduction.toStringAsFixed(2)} m",
+                                    ),
+                                    trailing: const Icon(
+                                      Icons.arrow_forward_ios,
+                                    ),
+                                    onTap: () {
+                                      Get.to(
+                                        () => ShiftDayViewPage(),
+                                        arguments: day.date,
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                            )
+                          : const Text("Loading"),
+                    ),
                   ),
                 ),
               ],
@@ -127,8 +153,8 @@ clipBehavior: Clip.hardEdge,
     );
     throw UnimplementedError();
   }
-  Widget _shiftCard(ProductionBrief order) {
 
+  Widget _shiftCard(ProductionBrief order) {
     return InkWell(
       onDoubleTap: () => {
         Get.to(() => PPonDateScreen(), arguments: [order.date]),
@@ -185,10 +211,6 @@ clipBehavior: Clip.hardEdge,
       ),
     );
   }
-
-
-
-
 }
 
 // function to display fetched data on screen
