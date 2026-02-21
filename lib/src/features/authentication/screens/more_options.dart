@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:production/src/features/Covering/screens/covering_list.dart';
 import 'package:production/src/features/Job/screens/job_list_screen.dart';
 import 'package:production/src/features/Orders/screens/add_order_page.dart';
+import 'package:production/src/features/PurchaseOrder/controllers/add_po.dart';
 import 'package:production/src/features/PurchaseOrder/screnns/AddPurchaseOrder.dart';
+import 'package:production/src/features/PurchaseOrder/screnns/po_list.dart';
 import 'package:production/src/features/ShiftPlan/screens/shift_plan_create.dart';
 import 'package:production/src/features/Warping/screens/warping_list.dart';
 import 'package:production/src/features/authentication/screens/home.dart';
@@ -18,6 +20,7 @@ import 'package:production/src/features/supplier/screen/supplier_list_page.dart'
 import 'package:production/src/features/wastage/screens/Add_Wastage.dart';
 
 import '../../Orders/screens/order_list_page.dart';
+import '../../PurchaseOrder/screnns/add_po.dart';
 import '../../materials/screens/material_list_screenn.dart';
 import '../../packing/screens/PackingOverview.dart';
 import '../../shift/screens/shift_list_page.dart';
@@ -116,13 +119,18 @@ class MoreOptionsPage extends StatelessWidget {
             _OptionTile(
               icon: Icons.backpack,
               label: "Add Purchase Order",
-              onTap: () => Get.to(() => AddPurchaseOrderPage()),
+              onTap: () => Get.to(() => AddPOPage(mode: POFormMode.create,)),
+            ),
+            _OptionTile(
+              icon: Icons.backpack,
+              label: " Purchase Order",
+              onTap: () => Get.to(() => POListPage()),
             ),
             _OptionTile(
               icon: Icons.logout,
-              label: "Logout",
+              label: "Material Inward",
               isDanger: true,
-              onTap: _confirmLogout,
+              onTap: () => Get.to(() => AddPOPage(mode: POFormMode.create,)),
             ),
           ],
         ),

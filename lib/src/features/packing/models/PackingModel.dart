@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 class PackingModel {
   final String id;
